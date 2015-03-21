@@ -27,9 +27,11 @@
 #include "WiiChuck.h" // The library used by the Nunchuck
  
 #define left 11  //Pin 11 controls left pan
-#define right 8 //Pin 3 controls right pan
+#define right 8 //Pin 8 controls right pan
 #define up 10   //Pin 10 controls up tilt
 #define down 9     //Pin 9 controls down tilt
+#define zoomin 13   //Pin 13 controls up tilt
+#define zoomdown 12     //Pin 12 controls down tilt
  
 WiiChuck chuck = WiiChuck();
  
@@ -37,8 +39,7 @@ int varx = 0;  // The x-axis variable to store the value coming from the Nunchuc
 int vary = 0;  // The y-axis variable to store the value coming from the Nunchuck
 int absx = 0;  // The x-axis variable used to store the absolute value.
 int absy = 0;  // The y-axis variable used to store the absolute value.
-bool cPressed =false;
-bool zPressed=false;
+
 void setup()
 {
   Serial.begin(115200); // Opening the serial port
@@ -65,31 +66,19 @@ static void nunchuck_setpowerpins()
  
 void loop()  {
   chuck.update();  // The Nunchuck values update in the loop
-  if (chuck.buttonZ) {
-     Serial.print("Z");
-  } else  {
-     Serial.print("-");
-  }
+    // 130 is the distance from 0 on the joystick
 
-    Serial.print(", ");  
 
-//not a function//  if (chuck.buttonC()) {
-  if (chuck.buttonC) {
-     Serial.print("C");
-  } else  {
-     Serial.print("-");
-  }
-
-   Serial.print(chuck.readJoyX());
-   Serial.print(", ");  
-   Serial.print(chuck.readJoyY());
-   Serial.print(", ");  
-   Serial.print((int)chuck.readAccelZ());
-   Serial.print(", ");  
-   Serial.println();
    delay(10);
-  // 130 is the distance from 0 on the joystick
-  varx = chuck.readJoyX();  // nunchuk.analogX is the value of the x-axis
+  if (chuck.buttonZ) {
+    zoom();
+  } else  {
+    panTilt();
+   
+  }
+}
+  void zoom(){
+      varx = chuck.readJoyX();  // nunchuk.analogX is the value of the x-axis
   vary = chuck.readJoyY();  // nunchuk.analogY is the value of the y-axis
  
   // The values used for speed
@@ -97,6 +86,76 @@ void loop()  {
   absx = abs(absx);  // Convert the x-axis value to an absolute value
   absy = vary;
   absy = abs(absy);
+   Serial.print("Zoom ");
+   Serial.print(chuck.readJoyX());
+   Serial.print(", ");  
+   Serial.print(chuck.readJoyY());
+   Serial.print(", ");  
+   Serial.println();
+
+  // Tilt based on the input from the joystick
+  if (vary > 18)
+  {
+ 
+    analogWrite(up, absy * 2.5);
+    digitalWrite(down, LOW);
+  }
+ 
+  else if (vary < -18)
+  {
+ 
+    analogWrite(down, absy * 2.5);
+    digitalWrite(up, LOW);
+  }
+ 
+  // Stop tilt
+  else
+  {
+    analogWrite(up, LOW);
+    analogWrite(down, LOW);
+  }
+ 
+  // Pan based on the input from the joystick
+  if (varx > 10)
+  {
+ 
+    analogWrite(right, absx * 2);
+    digitalWrite(left, LOW);
+ 
+  }
+ 
+  else if (varx < -10)
+  {
+    analogWrite(left, absx * 2);
+    digitalWrite(right, LOW);
+ 
+  }
+ 
+  // Stop pan
+  else
+  {
+    analogWrite(right, LOW);
+    analogWrite(left, LOW);
+  }
+}
+  void panTilt(){
+      varx = chuck.readJoyX();  // nunchuk.analogX is the value of the x-axis
+  vary = chuck.readJoyY();  // nunchuk.analogY is the value of the y-axis
+ 
+  // The values used for speed
+  absx = varx;
+  absx = abs(absx);  // Convert the x-axis value to an absolute value
+  absy = vary;
+  absy = abs(absy);
+  Serial.print(chuck.readJoyX());
+   Serial.print(", ");  
+   Serial.print(chuck.readJoyY());
+   Serial.print(", ");  
+
+   Serial.println();
+
+
+
  
   // Tilt based on the input from the joystick
   if (vary > 18)
@@ -142,5 +201,6 @@ void loop()  {
     analogWrite(right, LOW);
     analogWrite(left, LOW);
   }
+  }
 
-}
+

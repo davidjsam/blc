@@ -34,4 +34,6 @@ Serial.print(" A5 ");
 Serial.print(analogRead(potPin_5));
 Serial.print(" A0 ");
 Serial.println(analogRead(potPin_0));
+Serial.print(" pin 2 ");
+Serial.println(digitalRead(2));
 }
