@@ -80,13 +80,7 @@ class WiiChuck {
             Wire.begin();
             cnt = 0;
             averageCounter = 0;
-            // instead of the common 0x40 -> 0x00 initialization, we
-            // use 0xF0 -> 0x55 followed by 0xFB -> 0x00.
-            // this lets us use 3rd party nunchucks (like cheap $4 ebay ones)
-            // while still letting us use official oness.
-            // only side effect is that we no longer need to decode bytes in _nunchuk_decode_byte
-            // see http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1264805255
-            //  
+   
             Wire.beginTransmission(0x52);	// device address
             Wire.write(0xF0);
             Wire.write(0x55);

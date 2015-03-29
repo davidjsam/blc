@@ -11,6 +11,7 @@ void setup()
 pinMode(ledPin, OUTPUT);
 
 Serial.begin(115200);    
+pinMode(A0, INPUT);
 delay(100);  // wait for things to stabilize      
 
 }
@@ -33,7 +34,7 @@ Serial.print(analogRead(potPin_4));
 Serial.print(" A5 ");
 Serial.print(analogRead(potPin_5));
 Serial.print(" A0 ");
-Serial.println(analogRead(potPin_0));
+Serial.println(digitalRead(potPin_0));
 Serial.print(" pin 2 ");
 Serial.println(digitalRead(2));
 }

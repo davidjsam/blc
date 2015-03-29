@@ -78,7 +78,7 @@ void loop()  {
   }
 }
   void zoom(){
-      varx = chuck.readJoyX();  // nunchuk.analogX is the value of the x-axis
+  varx = chuck.readJoyX();  // nunchuk.analogX is the value of the x-axis
   vary = chuck.readJoyY();  // nunchuk.analogY is the value of the y-axis
  
   // The values used for speed
