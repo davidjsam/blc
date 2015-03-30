@@ -27,9 +27,9 @@ void loop() {
   chuck.update();
 
 
-  Serial.print(chuck.readJoyX());
+    Serial.print(chuck.readJoyX());
     Serial.print(", ");  
-  Serial.print(chuck.readPitch());
+    Serial.print(chuck.readPitch());
     Serial.print(", ");  
 
     Serial.print((int)chuck.readAccelX());
