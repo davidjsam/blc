@@ -6,10 +6,10 @@
 
 // Settings for wii pan and tilt
 //************************************************************************************************
-#define left 11  //Pin 11 controls left pan green
-#define right 8 //Pin 8 controls right pan yellow
-#define up 10   //Pin 10 controls up tilt black
-#define down 9     //Pin 9 controls down tilt blue
+#define left 7  //Pin 11 controls left pan green
+#define right 4 //Pin 8 controls right pan yellow
+#define up 6   //Pin 10 controls up tilt black
+#define down 5     //Pin 9 controls down tilt blue
 //Black is Ground on 2.5 mm goes to GND
 //Yellow is tip on 2.5mm and goes to lancPin 2
 //Red is circle on 2.5 mm and goes to Vin
